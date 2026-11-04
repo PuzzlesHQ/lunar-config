@@ -1,0 +1,21 @@
+# Idea Folder
+/.idea
+
+# mainSrc
+/gradlew
+/gradlew.bat
+/.gradle
+/build
+
+# buildSrc
+/buildSrc/.gradle
+/buildSrc/build
+/buildSrc/gradlew
+/buildSrc/gradlew.bat
+/dependencies.json
+
+/runs
+
+/lib
+/src/common/java/dev/puzzleshq/puzzleloader/cosmic/game/blockloader/generation/model/interfaces/*.java
+/src/common/java/dev/puzzleshq/puzzleloader/cosmic/game/blockloader/generation/model/interfaces/impl/**.java

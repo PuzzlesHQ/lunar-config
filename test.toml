@@ -1,0 +1,10 @@
+#This is an example for a number!
+number = 5
+
+[test]
+	#This is an example for a boolean!
+	hi = true
+
+	[test.test2]
+		#This is an example for an array!
+		hi = [1, 2]
