@@ -43,7 +43,7 @@ public class Example {
     }
 
     public static void main(String[] args) {
-        BackingConfig config = BackingConfigs.of(new File("test.toml"), false, true, true);
+        BackingConfig config = BackingConfigs.of(new File("test.toml"));
         ConfigPair<ExampleConfig> configPair = PuzzleConfigSpec.ofClass(ExampleConfig.class, config);
         PuzzleConfigSpec spec = configPair.getSpec();
         ExampleConfig exampleConfig = configPair.getConfig();

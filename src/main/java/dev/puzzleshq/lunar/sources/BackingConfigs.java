@@ -12,6 +12,10 @@ public class BackingConfigs {
         return new ElectronBackingConfig(config);
     }
 
+    public static ElectronBackingConfig of(File file) {
+        return of(FileConfig.builder(file).sync().autoreload().autosave().build());
+    }
+
     public static ElectronBackingConfig of(File file, boolean async, boolean autosave, boolean autoreload) {
         FileConfigBuilder builder = FileConfig.builder(file);
         if (!async) builder.sync();

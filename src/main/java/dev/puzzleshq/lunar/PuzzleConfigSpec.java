@@ -131,6 +131,7 @@ public class PuzzleConfigSpec {
             for (Field declaredField : clazz.getDeclaredFields()) {
                 String fieldName = declaredField.getName();
                 Class<?> fieldType = declaredField.getType();
+                if (Modifier.isStatic(declaredField.getModifiers())) continue;
                 declaredField.setAccessible(true);
 
                 FieldLangKey translationKey = declaredField.getAnnotation(FieldLangKey.class);
