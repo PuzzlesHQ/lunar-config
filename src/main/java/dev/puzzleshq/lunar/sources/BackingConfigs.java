@@ -21,7 +21,17 @@ public class BackingConfigs {
         if (!async) builder.sync();
         if (autoreload) builder.autoreload();
         if (autosave) builder.autosave();
-        return of(builder.build());
+
+        ElectronBackingConfig backing = null;
+
+        builder.onSave(() -> {
+            backing.getOnSaveHook().run();
+        });
+        builder.onLoad(() -> {
+            backing.getOnLoadHook().run();
+        });
+
+        return new ElectronBackingConfig(builder.build());
     }
 
 }

@@ -17,6 +17,17 @@ public interface BackingConfig {
     default void save() {}
     default void load() {}
 
+    default void setOnSaveHook(Runnable runnable) {}
+    default void setOnLoadHook(Runnable runnable) {}
+
+    default Runnable getOnSaveHook() {
+        return null;
+    }
+
+    default Runnable getOnLoadHook() {
+        return null;
+    }
+
     default <T> T getOrElse(List<String> path, T defaultValue) {
         T v = get(path);
         return v == null ? defaultValue : v;

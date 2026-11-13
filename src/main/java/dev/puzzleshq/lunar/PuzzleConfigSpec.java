@@ -31,6 +31,12 @@ public class PuzzleConfigSpec {
         this.baseSpec = null;
         this.config = config;
         this.keyToTranslation = new HashMap<>();
+
+        Runnable hook = config.getOnLoadHook();
+        config.setOnLoadHook(() -> {
+            clearCaches();
+            hook.run();
+        });
     }
 
     protected PuzzleConfigSpec(PuzzleConfigSpec baseSpec, List<String> path, List<ConfigValue<?>> values, List<PuzzleConfigSpec> subSpecs, Set<String> keySet) {
@@ -205,6 +211,18 @@ public class PuzzleConfigSpec {
 //
 //        return obj;
 //    }
+
+    public void clearCaches() {
+        Queue<PuzzleConfigSpec> specs = new ArrayDeque<>();
+        specs.add(this);
+        while (!specs.isEmpty()) {
+            PuzzleConfigSpec spec = specs.poll();
+            for (ConfigValue<?> value : spec.values) {
+                value.clearCache();
+            }
+            specs.addAll(spec.subSpecs);
+        }
+    }
 
     protected static class Builder {
 

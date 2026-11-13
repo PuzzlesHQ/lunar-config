@@ -9,6 +9,8 @@ import java.util.List;
 public class ElectronBackingConfig implements BackingConfig {
 
     private final Config config;
+    private Runnable onSave;
+    private Runnable onLoad;
 
     public ElectronBackingConfig(
             Config config
@@ -72,5 +74,25 @@ public class ElectronBackingConfig implements BackingConfig {
     public void load() {
         if (config instanceof FileConfig)
             ((FileConfig) config).load();
+    }
+
+    @Override
+    public void setOnSaveHook(Runnable runnable) {
+        onSave = runnable;
+    }
+
+    @Override
+    public void setOnLoadHook(Runnable runnable) {
+        onLoad = runnable;
+    }
+
+    @Override
+    public Runnable getOnSaveHook() {
+        return onSave;
+    }
+
+    @Override
+    public Runnable getOnLoadHook() {
+        return onLoad;
     }
 }
