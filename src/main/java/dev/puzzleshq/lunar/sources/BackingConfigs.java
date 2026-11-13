@@ -3,6 +3,7 @@ package dev.puzzleshq.lunar.sources;
 import com.electronwill.nightconfig.core.Config;
 import com.electronwill.nightconfig.core.file.FileConfig;
 import com.electronwill.nightconfig.core.file.FileConfigBuilder;
+import com.electronwill.nightconfig.core.io.IoUtils;
 
 import java.io.File;
 
@@ -13,7 +14,7 @@ public class BackingConfigs {
     }
 
     public static ElectronBackingConfig of(File file) {
-        return of(FileConfig.builder(file).sync().autoreload().autosave().build());
+        return of(file, false, true, true);
     }
 
     public static ElectronBackingConfig of(File file, boolean async, boolean autosave, boolean autoreload) {
@@ -24,12 +25,18 @@ public class BackingConfigs {
 
         ElectronBackingConfig backing = null;
 
-        builder.onSave(() -> {
-            backing.getOnSaveHook().run();
-        });
-        builder.onLoad(() -> {
+        Runnable loadHook = () -> {
             backing.getOnLoadHook().run();
-        });
+        };
+
+        Runnable saveHook = () -> {
+            backing.getOnSaveHook().run();
+        };
+
+        builder.onSave(saveHook);
+        builder.onLoad(loadHook);
+        builder.onAutoReload(loadHook);
+        builder.onAutoSave(saveHook);
 
         return new ElectronBackingConfig(builder.build());
     }
